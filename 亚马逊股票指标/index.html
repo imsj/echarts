@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>公司股票走势对比</title>
+    <script src='echarts.common.min.js'></script>
+    <script src="jquery3.3.1.js"></script>
+</head>
+<body>
+<div id="stock" style="height:600px;width:1000px;margin:auto;padding-top: 50px;"></div>
+<script type="text/javascript">
+
+    function Todate(num) { //Fri Oct 31 18:00:00 UTC+0800 2008
+
+        num = num + "";
+        var month = {};
+
+        month["Jan"] = 1;
+        month["Feb"] = 2;
+        month["Mar"] = 3;
+        month["Apr"] = 4;
+        month["May"] = 5;
+        month["Jun"] = 6;
+
+        month["Jul"] = 7;
+        month["Aug"] = 8;
+        month["Sep"] = 9;
+        month["Oct"] = 10;
+        month["Nov"] = 11;
+        month["Dec"] = 12;
+
+        var week = {};
+
+        week["Mon"] = "一";
+        week["Tue"] = "二";
+        week["Wed"] = "三";
+        week["Thu"] = "四";
+        week["Fri"] = "五";
+        week["Sat"] = "六";
+        week["Sun"] = "日";
+
+        str = num.split(" ");
+
+        date = str[5] + "-";
+
+        date = date + month[str[1]] + "-" + str[2];
+
+        return date;
+
+    }
+
+    var myChart = echarts.init(document.getElementById('stock'));
+
+    $.get('data.json').done(function (data) {
+        myChart.setOption(
+            {
+                title: {
+                    text: '某股票走势图',
+                    left: 'center'
+                },
+                xAxis: [
+                    {
+                        data: data.amazon.map(function (item) {
+                            return Todate(item.time)
+                        })
+                    }],
+                yAxis: {},
+                dataZoom: [{
+                    type: 'slider',
+                    start: 0,
+                    end: 10
+                }],
+                legend: {
+                    data: ['company1', 'company2', 'company3'],
+                    left: 'right'
+                },
+                tooltip: {trigger: 'axis'},
+                series: [
+                    {
+                        name: 'company1',
+                        type: 'line',
+                        data: data.amazon.map(function (item) {
+                            return item.current
+                        })
+                    },
+                    {
+                        name: 'company2',
+                        type: 'line',
+                        data: (function () {
+                            var times = data.amazon.map(function (item) {
+                                return item.time
+                            });
+                            var start = times.indexOf("Tue Jan 02 00:00:00 -0500 2001");
+                            var front = [];
+                            for (var i = 0; i < start; i++) {
+                                front.push('-')
+                            }
+                            var back = [];
+                            for (var j = 0; j < data.amazon.length - start - data.bg.length; j++) {
+                                back.push('-')
+                            }
+                            var medium = data.bg.map(function (item) {
+                                return item.current
+                            });
+                            return front.concat(medium, back)
+                        })()
+                    },
+                    {
+                        name: 'company3',
+                        type: 'line',
+                        data: (function () {
+                            var front = [];
+                            var back = data.bn.map(function (item) {
+                                return item.current
+                            });
+                            for (var i = 0; i < data.amazon.length - data.bn.length; i++) {
+                                front.push('-')
+                            }
+                            return front.concat(back)
+                        })()
+                    }]
+            }
+        );
+    });
+</script>
+</body>
+</html>

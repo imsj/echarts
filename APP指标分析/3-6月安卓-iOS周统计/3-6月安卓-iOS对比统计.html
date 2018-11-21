@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <script src="../echarts.min.js"></script>
+    <style type="text/css">
+        .chart {
+            width: 1000px;
+            height: 500px;
+            /*display: none;*/
+            margin: 50px auto 0 auto;
+        }
+    </style>
+    <title>3-6月安卓-iOS对比统计</title>
+</head>
+<body>
+<div>
+    <p><a href="3-6月iOS统计.html">ios</a></p>
+    <p><a href="index.html">安卓</a></p>
+    <p><a href="3-6月安卓-iOS对比统计.html">安卓-iOS对比</a></p>
+</div>
+<div id="week-rate-line" class="chart"></div>
+<div id="one-week" class="chart"></div>
+<script type="text/javascript">
+
+  var week_rateline = echarts.init(document.querySelector("#week-rate-line"));
+  var option_rateline = {
+    title: {
+      text: "周活跃率 对比"
+    },
+    tooltip: {
+      show: true
+    },
+    legend: {
+      data: ['安卓周活跃率', 'iOS周活跃率'],
+      left: 'right'
+    },
+    xAxis: {
+      axisTick: {
+        alignWithLabel: true
+      },
+      data: ['03-12', '03-19', '03-26', '04-02', '04-09', '04-16', '04-23', '04-30', '05-07', '05-14', '05-21', '05-28', '06-04', '06-11','06-18']
+    },
+    yAxis: {},
+    series: [
+      {
+        name: '安卓周活跃率',
+        type: 'line',
+		markPoint: {
+          symbolSize: [70, 60],
+          data: [
+            {
+              type: 'min'
+            },
+            {
+              type: 'max'
+            }
+          ]
+        },
+        lineStyle: {
+          normal: {
+            color: '#66ffbb'
+          }
+        },
+        areaStyle: {
+          normal: {
+            color: '#33ffcc',
+            opacity: 0.6
+          }
+        },
+        itemStyle: {
+          normal: {
+            color: '#9a9'
+          }
+        },
+        markLine: {
+          data: [{
+            type: 'average'
+          }],
+          precision: 3,
+          lineStyle: {
+            normal: {
+              color: '#229999'
+            }
+          }
+        },
+        data: [0.041, 0.051, 0.059, 0.076, 0.056, 0.051, 0.043, 0.065, 0.075, 0.052, 0.049, 0.06, 0.083, 0.068, 0.067]
+      },
+      {
+        name: 'iOS周活跃率',
+        type: 'line',
+        lineStyle: {
+          normal: {
+            color: '#fdaaaa'
+          }
+        },
+        itemStyle: {
+          normal: {
+            color: '#a15'
+          }
+        },
+        areaStyle: {
+          normal: {
+            color: '#ddaabb',
+            opacity: 0.6
+          }
+        },
+		markPoint: {
+          symbolSize: [70, 60],
+          data: [
+            {
+              type: 'min'
+            },
+            {
+              type: 'max'
+            }
+          ]
+        },
+        markLine: {
+          data: [{
+            type: 'average'
+          }],
+          precision: 3,
+          lineStyle: {
+            normal: {
+              color: 'red'
+            }
+          }
+        },
+        data: [0.121, 0.113, 0.105, 0.105, 0.094, 0.098, 0.088, 0.123, 0.106, 0.109, 0.106, 0.124, 0.11, 0.109, 0.118]
+      }
+    ]
+  };
+  week_rateline.setOption(option_rateline);
+
+  var one_week = echarts.init(document.querySelector('#one-week'));
+  var option_oneweek = {
+    title: {
+      text: '一周后留存率对比'
+    },
+    legend: {
+      data: ['安卓', 'iOS']
+    },
+    xAxis: {
+      axisTick: {
+        alignWithLabel: true
+      },
+      data: ['03-12', '03-19', '03-26', '04-02', '04-09', '04-16', '04-23', '04-30', '05-07', '05-14', '05-21', '05-28', '06-04', '06-11','06-18']
+    },
+    yAxis: {},
+    tooltip: {
+      show: true
+    },
+    series: [
+      {
+        name: '安卓',
+		markPoint: {
+          symbolSize: [70, 60],
+          data: [
+            {
+              type: 'min'
+            },
+            {
+              type: 'max'
+            }
+          ]
+        },
+        type: 'line',
+        markLine: {
+          data: [{
+            type: 'average'
+          }]
+        },
+        data: [19.6, 19, 20.4, 15.6, 16.2, 16.6, 20.3, 19.8, 18.4, 20.4, 20.8, 21, 14.7, 15.6, 11.1]
+      },
+      {
+        name: 'iOS',
+		markPoint: {
+          symbolSize: [70, 60],
+          data: [
+            {
+              type: 'min'
+            },
+            {
+              type: 'max'
+            }
+          ]
+        },
+        type: 'line',
+        markLine: {
+          data: [{
+            type: 'average'
+          }]
+        },
+        data: [20, 21.6, 21, 20.4, 19.6, 21.1, 22.7, 21.9, 24, 25.8, 26.3, 26.7, 25.4, 24.8, 18.6]
+      }
+    ]
+  };
+  one_week.setOption(option_oneweek);
+</script>
+</body>
+</html>

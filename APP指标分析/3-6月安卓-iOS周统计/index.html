@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <script src="../echarts.min.js"></script>
+    <style type="text/css">
+        .chart {
+            width: 1000px;
+            height: 500px;
+            /*display: none;*/
+            margin: 50px auto 0 auto;
+        }
+    </style>
+    <title>安卓3-6月用户统计</title>
+</head>
+<body>
+<div>
+    <p><a href="3-6月iOS统计.html">ios</a></p>
+    <p><a href="index.html">安卓</a></p>
+    <p><a href="3-6月安卓-iOS对比统计.html">安卓-iOS对比</a></p>
+
+</div>
+<div id="week-bar" class="chart"></div>
+<div id="week-line" class="chart"></div>
+<div id="week-rate-line" class="chart"></div>
+<div id="open-number" class="chart"></div>
+<div id="funnel" class="chart"></div>
+<div id="one-week" class="chart"></div>
+<script type="text/javascript">
+  var week_bar = echarts.init(document.querySelector("#week-bar"));
+  var option_bar = {
+    title: {
+      text: "安卓-周新增-老用户周活跃数"
+    },
+    tooltip: {
+      show: true
+    },
+    legend: {
+      data: ["周新增", "老用户周活跃数"],
+      left: 'right'
+    },
+    xAxis: {
+      axisTick: {
+        alignWithLabel: true
+      },
+      data: ['03-12', '03-19', '03-26', '04-02', '04-09', '04-16', '04-23', '04-30', '05-07', '05-14', '05-21', '05-28', '06-04', '06-11', '06-18']
+    },
+    yAxis: {},
+    series: [
+      {
+        name: '周新增',
+        type: 'bar',
+        stack: '周活跃-bar',
+        label: {
+          normal: {
+            show: true,
+            position: 'insideTop'
+          }
+        },
+        data: [1957, 2729, 3358, 4641, 2828, 2692, 1869, 4333, 5296, 2734, 2676, 4206, 6828, 5233, 5491]
+      },
+      {
+        name: '老用户周活跃数',
+        type: 'bar',
+        stack: '周活跃-bar',
+        label: {
+          normal: {
+            show: true,
+            position: 'insideTop'
+          }
+        },
+        data: [1261, 1382, 1639, 2136, 2357, 2099, 2237, 2197, 2623, 2880, 2840, 2684, 3307, 3461, 3455]
+      }
+    ]
+  };
+  week_bar.setOption(option_bar);
+
+  var week_line = echarts.init(document.querySelector("#week-line"));
+  var option_line = {
+    title: {
+      text: "安卓-周新增-老用户周活跃数-周总活跃数"
+    },
+    tooltip: {
+      show: true
+    },
+    legend: {
+      data: ["周新增", "老用户周活跃数", "周总活跃数"],
+      left: 'right'
+    },
+    xAxis: {
+      axisTick: {
+        alignWithLabel: true
+      },
+      data: ['03-12', '03-19', '03-26', '04-02', '04-09', '04-16', '04-23', '04-30', '05-07', '05-14', '05-21', '05-28', '06-04', '06-11', '06-18']
+    },
+    yAxis: {},
+    series: [
+      {
+        name: '周新增',
+        type: 'line',
+        markPoint: {
+          symbolSize: [70, 60],
+          data: [
+            {
+              type: 'min'
+            },
+            {
+              type: 'max'
+            }
+          ]
+        },
+        data: [1957, 2729, 3358, 4641, 2828, 2692, 1869, 4333, 5296, 2734, 2676, 4206, 6828, 5233, 5491]
+      },
+      {
+        name: '老用户周活跃数',
+        type: 'line',
+        markPoint: {
+          symbolSize: [70, 60],
+          data: [
+            {
+              type: 'min'
+            },
+            {
+              type: 'max'
+            }
+          ]
+        },
+        data: [1261, 1382, 1639, 2136, 2357, 2099, 2237, 2197, 2623, 2880, 2840, 2684, 3307, 3461, 3455]
+      },
+      {
+        name: '周总活跃数',
+        type: 'line',
+        markPoint: {
+          symbolSize: [70, 60],
+          data: [
+            {
+              type: 'min'
+            },
+            {
+              type: 'max'
+            }
+          ]
+        },
+        data: [3218, 4111, 4997, 6777, 5185, 4791, 4106, 6530, 7919, 5614, 5516, 6890, 10135, 8694, 8946]
+      },
+      {
+        name: '周总活跃平均',
+        type: 'line',
+        showSymbol: false,
+        areaStyle: {
+          normal: {
+            color: '#238443',
+            opacity: 0.1
+          }
+        },
+        lineStyle: {
+          normal: {
+            color: 'black',
+            width: 1,
+            opacity: 0.8,
+            type: 'dashed'
+          }
+        },
+        step: 'start',
+        data: [4775.75, 4775.75, 4775.75, 4775.75, 5153, 5153, 5153, 5153, 6484.75, 6484.75, 6484.75, 6484.75, 9258.333333, 9258.333333, 9258.333333]
+      },
+      {
+        name: "周新增平均",
+        data: [3171.25, 3171.25, 3171.25, 3171.25, 2930.5, 2930.5, 2930.5, 2930.5, 3728, 3728, 3728, 3728, 5850.666667, 5850.666667, 5850.666667],
+        type: 'line',
+        showSymbol: false,
+        areaStyle: {
+          normal: {
+            color: '#4575b4',
+            opacity: 0.1
+          }
+        },
+        lineStyle: {
+          normal: {
+            color: 'blue',
+            width: 1,
+            opacity: 0.8,
+            type: 'dashed'
+          }
+        },
+        step: 'start'
+      }
+    ]
+  };
+  week_line.setOption(option_line);
+
+  var week_rateline = echarts.init(document.querySelector("#week-rate-line"));
+  var option_rateline = {
+    title: {
+      text: "安卓-老用户周活跃数占比"
+    },
+    tooltip: {
+      show: true
+    },
+    legend: {
+      data: ["老用户周活跃占比"],
+      left: 'right'
+    },
+    xAxis: {
+      axisTick: {
+        alignWithLabel: true
+      },
+      data: ['03-12', '03-19', '03-26', '04-02', '04-09', '04-16', '04-23', '04-30', '05-07', '05-14', '05-21', '05-28', '06-04', '06-11', '06-18']
+    },
+    yAxis: {},
+    series: [
+      {
+        name: '老用户周活跃占比',
+        type: 'line',
+        stack: '活跃占比',
+        areaStyle: {normal: {}},
+        markPoint: {
+          symbolSize: [70, 60],
+          data: [
+            {
+              type: 'min'
+            },
+            {
+              type: 'max'
+            }
+          ]
+        },
+        markLine: {
+          data: [
+            {
+              name: '50%分割线',
+              yAxis: 0.5
+            },
+			{
+			  name:'平均',
+			  precision:3,
+			  type:'average'
+			}
+          ],
+          lineStyle: {
+            normal: {
+              color: '#234',
+              opacity: 0.6
+            }
+          }
+        },
+        data: [0.392, 0.336, 0.328, 0.315, 0.455, 0.438, 0.545, 0.336, 0.331, 0.513, 0.515, 0.39, 0.326, 0.398, 0.386]
+      },
+      {
+        name: '新增活跃占比',
+        type: 'line',
+        stack: '活跃占比',
+        areaStyle: {
+          normal: {
+            color: '#999'
+          }
+        },
+        showSymbol: false,
+        data: [0.608, 0.664, 0.672, 0.685, 0.545, 0.562, 0.455, 0.664, 0.669, 0.487, 0.485, 0.61, 0.674, 0.602, 0.614]
+      }
+    ]
+  };
+  week_rateline.setOption(option_rateline);
+
+  var open_number = echarts.init(document.querySelector('#open-number'));
+  var option_open = {
+    title: {
+      text: "安卓-周启动次数"
+    },
+    tooltip: {
+      show: true
+    },
+    legend: {
+      data: ["周启动次数"],
+      left: 'right'
+    },
+    xAxis: {
+      axisTick: {
+        alignWithLabel: true
+      },
+      data: ['03-12', '03-19', '03-26', '04-02', '04-09', '04-16', '04-23', '04-30', '05-07', '05-14', '05-21', '05-28', '06-04', '06-11', '06-18']
+    },
+    yAxis: {},
+    series: [
+      {
+        data: [11900, 14522, 18198, 22446, 18958, 17461, 15003, 23556, 27091, 21485, 21794, 26691, 33482, 33948, 33866],
+        type: 'line',
+        name: '周启动次数',
+        markPoint: {
+          symbolSize: [70, 60],
+          data: [
+            {
+              type: 'min'
+            },
+            {
+              type: 'max'
+            }
+          ]
+        },
+        lineStyle: {
+          normal: {
+            color: '#887767',
+            opacity: 0.6
+          }
+        },
+        itemStyle: {
+          normal: {
+            color: '#888879'
+          }
+        },
+        areaStyle: {
+          normal: {
+            color: '#667788',
+            opacity: 0.2
+          }
+        }
+      },
+      {
+        data: [16766.5, 16766.5, 16766.5, 16766.5, 18744.5, 18744.5, 18744.5, 18744.5, 24265.25, 24265.25, 24265.25, 24265.25, 33765.33333, 33765.33333, 33765.33333],
+        type: 'line',
+        lineStyle: {
+          normal: {
+            type: 'dashed',
+            color: '#333344'
+          }
+        },
+        step: 'start',
+        showSymbol: false
+      }
+    ]
+  };
+  open_number.setOption(option_open);
+
+  var funnel = echarts.init(document.querySelector('#funnel'));
+  var option_funnel = {
+    title: {
+      text: '安卓-留存分析'
+    },
+    legend: {
+      data: ['03-12', '03-19', '03-26', '04-02'],
+      left: 'right'
+    },
+    xAxis: {
+      axisTick: {
+        alignWithLabel: true
+      },
+      data: ['开始', '1周后', '2周后', '3周后', '4周后', '5周后', '6周后', '7周后', '8周后', '9周后']
+    },
+    yAxis: {},
+    tooltip: {
+      show: true
+    },
+    series: [
+      {
+        data: [100, 19.6, 10.4, 7.3, 6.4, 4.9, 4.2, 4.1, 3, 2.9],
+        name: '03-12',
+        type: 'line'
+      },
+      {
+        data: [100, 19, 10.6, 8.2, 5.8, 5.6, 4.3, 3.6, 3, 2.7],
+        name: '03-19',
+        type: 'line'
+      },
+      {
+        data: [100, 20.4, 9.9, 6.6, 5.7, 4.5, 4.2, 3.2, 3, 2.9],
+        name: '03-26',
+        type: 'line'
+      },
+      {
+        data: [100, 15.6, 7.3, 6.4, 5.1, 4.5, 3.2, 2.9, 2.1, 2.3],
+        name: '04-02',
+        type: 'line'
+      }
+    ]
+  };
+  funnel.setOption(option_funnel);
+
+  var one_week = echarts.init(document.querySelector('#one-week'));
+  var option_oneweek = {
+    title: {
+      text: '安卓-留存分析-漏斗图'
+    },
+    legend: {
+      data: ['开始', '1周后', '2周后', '3周后', '4周后', '5周后', '6周后', '7周后', '8周后', '9周后'],
+      left: 'right'
+    },
+    tooltip: {
+      show: true
+    },
+    series: [
+      {
+        data: [
+          {value: 100, name: '开始'},
+          {value: 19.6, name: '1周后'},
+          {value: 10.4, name: '2周后'},
+          {value: 7.3, name: '3周后'},
+          {value: 6.4, name: '4周后'},
+          {value: 4.9, name: '5周后'},
+          {value: 4.2, name: '6周后'},
+          {value: 4.1, name: '7周后'},
+          {value: 3, name: '8周后'},
+          {value: 2.9, name: '9周后'}
+        ],
+        type: 'funnel'
+      }
+    ]
+  };
+  one_week.setOption(option_oneweek);
+</script>
+</body>
+</html>

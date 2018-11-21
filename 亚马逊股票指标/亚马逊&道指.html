@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>亚马逊股票与道指走势对比</title>
+    <script src="echarts.common.min.js"></script>
+    <script src="jquery3.3.1.js"></script>
+</head>
+<body>
+<div id="stock" style="height:600px;width:1000px;margin:auto;padding-top: 50px;"></div>
+<script type="text/javascript">
+
+    function Todate(num) { //Fri Oct 31 18:00:00 UTC+0800 2008
+
+        num = num + "";
+        var month = {};
+
+        month["Jan"] = 1;
+        month["Feb"] = 2;
+        month["Mar"] = 3;
+        month["Apr"] = 4;
+        month["May"] = 5;
+        month["Jun"] = 6;
+
+        month["Jul"] = 7;
+        month["Aug"] = 8;
+        month["Sep"] = 9;
+        month["Oct"] = 10;
+        month["Nov"] = 11;
+        month["Dec"] = 12;
+
+        var week = {};
+
+        week["Mon"] = "一";
+        week["Tue"] = "二";
+        week["Wed"] = "三";
+        week["Thu"] = "四";
+        week["Fri"] = "五";
+        week["Sat"] = "六";
+        week["Sun"] = "日";
+
+        str = num.split(" ");
+
+        date = str[5] + "-";
+
+        date = date + month[str[1]] + "-" + str[2];
+
+        return date;
+
+    }
+
+    var myChart = echarts.init(document.getElementById('stock'));
+
+    $.get('dji_amazon.json').done(function (data) {
+        myChart.setOption({
+            title: {
+                text: '亚马逊股票与道指走势对比',
+                left: 'center'
+            },
+            xAxis: [{
+                data: data.amazon.map(function (item) {
+                    return Todate(item[1])
+                })
+            }],
+            yAxis: [
+                {
+                    name: "amazon"
+                },
+                {
+                    name: "dow"
+                }],
+            dataZoom: [{
+                type: 'slider', start: 0, end: 50
+            }],
+            legend: {
+                data: ['亚马逊', '道指'],
+                left: 'right'
+            },
+            tooltip: {trigger: 'axis'},
+            series: [
+                {
+                    name: '亚马逊',
+                    type: 'line', data: data.amazon.map(function (item) {
+                    return item[0]
+                }),
+                    yAxisIndex: 0
+                },
+                {
+                    name: '道指',
+                    yAxisIndex: 1,
+                    type: 'line', data: (function () {
+//                    var times = data.dji.map(function (item) {
+//                        return item[1]
+//                    });
+                    var opens = data.dji.map(function (item) {
+                        return item[0]
+                    });
+//                    return opens.slice(times.indexOf("Fri May 16 00:00:00 +0800 1997"))
+                    return opens.slice(opens.length - 5323)
+                })()
+                }
+            ]
+        });
+    });
+</script>
+</body>
+</html>
